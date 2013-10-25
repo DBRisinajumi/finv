@@ -1,14 +1,28 @@
 <?php
-/**
-* generate translation files
-* in app directory start:
-* yiic message G:\xdocs\app-0.21.0_20131018\appParkOil/../vendor\dbrisinajumi\finv\translation.php
-*/
-return array(
-    'sourcePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR ,  //root dir of all source
-    'messagePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR .'messages',  //root dir of message translations
-    'languages'  => array('en','lt','lv','ru'),  //array of lang codes to translate to, e.g. es_mx
-    'fileTypes' => array('php',), //array of extensions no dot all others excluded
-    //'exclude' => array('.svn',),  //list of paths or files to exclude
-    'translator' => 'Yii::t',  //this is the default but lets be complete
-);
+
+class FinvModule extends CWebModule
+{
+	public function init()
+	{
+		// this method is called when the module is being created
+		// you may place code here to customize the module or the application
+
+		// import the module-level models and components
+		$this->setImport(array(
+			'finv.models.*',
+			'finv.components.*',
+		));
+	}
+
+	public function beforeControllerAction($controller, $action)
+	{
+		if(parent::beforeControllerAction($controller, $action))
+		{
+			// this method is called before any module controller action is performed
+			// you may place customized code here
+			return true;
+		}
+		else
+			return false;
+	}
+}

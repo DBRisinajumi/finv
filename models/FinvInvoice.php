@@ -7,6 +7,8 @@ Yii::import('FinvInvoice.*');
 class FinvInvoice extends BaseFinvInvoice
 {
 
+    public $fiit = array();
+    
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
     {
@@ -39,6 +41,82 @@ class FinvInvoice extends BaseFinvInvoice
           array('column3', 'rule2'),
           ) */
         );
+    }
+    
+    /**
+     * ideja par fikso funkciju
+     * @param type $param
+     * @param type $scenario
+     * @param type $error
+     * @return boolean
+     */
+    static function p3insert($param,$scenario = FALSE, &$error){
+        $model = new FinvInvoice;
+        if($scenario){
+            $model->scenario = $this->scenario; //rulles var definēt pārbaudi
+        }
+
+        $model->attributes = $param;
+
+        try {
+            if ($model->save()) {
+                return $model->primaryKey();
+            }
+            $error = $model->errors;
+            return FALSE;
+        } catch (Exception $e) {
+            $model->addError('finv_id', $e->getMessage());
+            return FALSE;
+        }        
+    }
+    
+    public function createInvoice($invoice,$item){
+        
+        //default values
+        $invoice['finv_reg_date'] = date('Y-m-d');
+        
+        //create invoice record
+        $this->attributes = $invoice;
+        try {
+            if (!$this->save()) {
+                return FALSE;
+            }
+        } catch (Exception $e) {
+            $this->addError('finv_id', $e->getMessage());
+            return FALSE;
+        }                
+        
+        foreach ($item as $param){
+            $fiit = new FiitInvoiceItem;
+            $fiit->attributes = $param;
+            $fiit->fiit_finv_id = $this->finv_id;
+
+            try {
+                if (!$fiit->save()) {
+                    $this->fiit[] = $fiit;
+                    return FALSE;
+                }
+                $this->fiit[] = $fiit;
+                continue;
+            } catch (Exception $e) {
+                $fiit->addError('fiit_id', $e->getMessage());
+                $this->fiit[] = $fiit;
+                return FALSE;
+            }              
+        }
+        
+        //@todo add racalc
+        return TRUE;
+        
+    }
+    
+    public function getInvoiceErrors(){
+        $error = $this->errors;
+        foreach ($this->fiit as $fiit){
+            $error = array_merge($error,$fiit->errors);
+        }
+        return $error;
+        
     }
 
 }

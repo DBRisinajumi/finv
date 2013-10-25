@@ -6,6 +6,7 @@
  * Columns in table "fvat_vat" available as properties of the model:
  * @property integer $fvat_id
  * @property double $fvat_rate
+ * @property string $fvat_label
  * @property integer $fvat_order
  * @property integer $fvat_hide
  *
@@ -29,18 +30,18 @@ abstract class BaseFvatVat extends CActiveRecord
     {
         return array_merge(
             parent::rules(), array(
-                array('fvat_rate', 'required'),
-                array('fvat_order, fvat_hide', 'default', 'setOnEmpty' => true, 'value' => null),
+                array('fvat_rate, fvat_label, fvat_order, fvat_hide', 'default', 'setOnEmpty' => true, 'value' => null),
                 array('fvat_order, fvat_hide', 'numerical', 'integerOnly' => true),
                 array('fvat_rate', 'numerical'),
-                array('fvat_id, fvat_rate, fvat_order, fvat_hide', 'safe', 'on' => 'search'),
+                array('fvat_label', 'length', 'max' => 10),
+                array('fvat_id, fvat_rate, fvat_label, fvat_order, fvat_hide', 'safe', 'on' => 'search'),
             )
         );
     }
 
     public function getItemLabel()
     {
-        return (string) $this->fvat_id;
+        return (string) $this->fvat_label;
     }
 
     public function behaviors()
@@ -66,6 +67,7 @@ abstract class BaseFvatVat extends CActiveRecord
         return array(
             'fvat_id' => Yii::t('FinvModule.crud', 'Fvat'),
             'fvat_rate' => Yii::t('FinvModule.crud', 'Fvat Rate'),
+            'fvat_label' => Yii::t('FinvModule.crud', 'Fvat Label'),
             'fvat_order' => Yii::t('FinvModule.crud', 'Fvat Order'),
             'fvat_hide' => Yii::t('FinvModule.crud', 'Fvat Hide'),
         );
@@ -79,6 +81,7 @@ abstract class BaseFvatVat extends CActiveRecord
 
         $criteria->compare('t.fvat_id', $this->fvat_id);
         $criteria->compare('t.fvat_rate', $this->fvat_rate);
+        $criteria->compare('t.fvat_label', $this->fvat_label, true);
         $criteria->compare('t.fvat_order', $this->fvat_order);
         $criteria->compare('t.fvat_hide', $this->fvat_hide);
 
