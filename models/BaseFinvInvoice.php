@@ -52,11 +52,11 @@ abstract class BaseFinvInvoice extends CActiveRecord
         return array_merge(
             parent::rules(), array(
                 array('finv_number, finv_issuer_ccmp_id, finv_payer_ccmp_id, finv_reg_date, finv_fcrn_id, finv_basic_fcrn_id', 'required'),
-                array('finv_series_number, finv_date, finv_budget_date, finv_due_date, finv_notes, finv_amt, finv_vat, finv_total, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before, finv_stst_id, finv_paid', 'default', 'setOnEmpty' => true, 'value' => null),
+                array('finv_series_number, finv_date, finv_budget_date, finv_due_date, finv_notes, finv_amt, finv_vat, finv_total, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before, finv_stst_id, finv_paid, finv_ref,finv_ref_id', 'default', 'setOnEmpty' => true, 'value' => null),
                 array('finv_fcrn_id, finv_basic_fcrn_id, finv_stst_id, finv_paid', 'numerical', 'integerOnly' => true),
                 array('finv_series_number, finv_issuer_ccmp_id, finv_payer_ccmp_id, finv_amt, finv_vat, finv_total, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before', 'length', 'max' => 10),
                 array('finv_number', 'length', 'max' => 20),
-                array('finv_date, finv_budget_date, finv_due_date, finv_notes', 'safe'),
+                array('finv_date, finv_budget_date, finv_due_date, finv_notes, finv_ref,finv_ref_id', 'safe'),
                 array('finv_id, finv_series_number, finv_number, finv_issuer_ccmp_id, finv_payer_ccmp_id, finv_reg_date, finv_date, finv_budget_date, finv_due_date, finv_notes, finv_fcrn_id, finv_amt, finv_vat, finv_total, finv_basic_fcrn_id, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before, finv_stst_id, finv_paid', 'safe', 'on' => 'search'),
             )
         );
@@ -114,6 +114,8 @@ abstract class BaseFinvInvoice extends CActiveRecord
             'finv_basic_payment_before' => Yii::t('FinvModule.crud', 'Finv Basic Payment Before'),
             'finv_stst_id' => Yii::t('FinvModule.crud', 'Finv Stst'),
             'finv_paid' => Yii::t('FinvModule.crud', 'Finv Paid'),
+            'finv_ref' => Yii::t('FinvModule.crud', 'REF'),
+            'finv_ref_id' => Yii::t('FinvModule.crud', 'REF ID'),
         );
     }
 

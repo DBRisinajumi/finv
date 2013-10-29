@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">p3_02</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="finv_invoice" view="colnames">
+<left>460</left>
+<top>63</top>
+<width>196</width>
+<height>405</height>
+<sql_create_table>CREATE TABLE `finv_invoice` (
+  `finv_id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `finv_series_number` varchar(10) DEFAULT NULL,
+  `finv_number` varchar(20) NOT NULL,
+  `finv_issuer_ccmp_id` int(10) unsigned NOT NULL,
+  `finv_payer_ccmp_id` int(10) unsigned NOT NULL,
+  `finv_reg_date` date NOT NULL,
+  `finv_date` date NOT NULL DEFAULT '0000-00-00',
+  `finv_budget_date` date DEFAULT '0000-00-00',
+  `finv_due_date` date DEFAULT '0000-00-00',
+  `finv_notes` text,
+  `finv_fcrn_id` tinyint(10) unsigned NOT NULL,
+  `finv_amt` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_vat` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_basic_fcrn_id` tinyint(10) unsigned NOT NULL,
+  `finv_basic_amt` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_basic_vat` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_basic_total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_basic_payment_before` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `finv_stst_id` tinyint(10) unsigned DEFAULT NULL,
+  `finv_paid` tinyint(1) unsigned DEFAULT '0',
+  PRIMARY KEY (`finv_id`),
+  KEY `finv_payer_bcmp_id` (`finv_payer_ccmp_id`),
+  KEY `finv_cinv_id` (`finv_issuer_ccmp_id`),
+  KEY `finv_fcrn_id` (`finv_fcrn_id`),
+  KEY `finv_csta_id` (`finv_stst_id`),
+  KEY `finv_number` (`finv_number`(4)),
+  KEY `finv_bvsl_id` (`finv_id`),
+  KEY `finv_basic_fcrn_id` (`finv_basic_fcrn_id`),
+  CONSTRAINT `finv_invoice_ibfk_1` FOREIGN KEY (`finv_issuer_ccmp_id`) REFERENCES `ccmp_company` (`ccmp_id`),
+  CONSTRAINT `finv_invoice_ibfk_2` FOREIGN KEY (`finv_payer_ccmp_id`) REFERENCES `ccmp_company` (`ccmp_id`),
+  CONSTRAINT `finv_invoice_ibfk_3` FOREIGN KEY (`finv_fcrn_id`) REFERENCES `fcrn_currency` (`fcrn_id`),
+  CONSTRAINT `finv_invoice_ibfk_4` FOREIGN KEY (`finv_basic_fcrn_id`) REFERENCES `fcrn_currency` (`fcrn_id`),
+  CONSTRAINT `finv_invoice_ibfk_5` FOREIGN KEY (`finv_stst_id`) REFERENCES `stst_state` (`stst_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="ccmp_company" view="colnames">
+<left>43</left>
+<top>36</top>
+<width>192</width>
+<height>351</height>
+<sql_create_table>CREATE TABLE `ccmp_company` (
+  `ccmp_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ccmp_name` varchar(200) NOT NULL,
+  `ccmp_ccnt_id` smallint(6) unsigned DEFAULT NULL COMMENT 'contry',
+  `ccmp_registrtion_no` varchar(20) DEFAULT NULL,
+  `ccmp_vat_registrtion_no` varchar(20) DEFAULT NULL,
+  `ccmp_registration_address` varchar(200) DEFAULT NULL,
+  `ccmp_official_ccit_id` int(10) unsigned DEFAULT NULL,
+  `ccmp_official_address` varchar(200) DEFAULT NULL,
+  `ccmp_official_zip_code` varchar(20) DEFAULT NULL,
+  `ccmp_office_ccit_id` int(10) unsigned DEFAULT NULL,
+  `ccmp_office_address` varchar(200) DEFAULT NULL,
+  `ccmp_office_zip_code` varchar(20) DEFAULT NULL,
+  `ccmp_statuss` enum('ACTIVE','CLOSED','POTENTIAL') DEFAULT 'ACTIVE',
+  `ccmp_description` text,
+  `ccmp_office_phone` varchar(45) NOT NULL,
+  `ccmp_office_email` varchar(100) NOT NULL,
+  `ccmp_agreement_nr` varchar(45) DEFAULT NULL,
+  `ccmp_agreement_date` date DEFAULT NULL,
+  PRIMARY KEY (`ccmp_id`),
+  UNIQUE KEY `ccmp_name_UNIQUE` (`ccmp_name`),
+  KEY `ccmp_ccnt_id` (`ccmp_ccnt_id`),
+  KEY `ccmp_name` (`ccmp_name`(4)),
+  KEY `ccmp_official_ccit_id` (`ccmp_official_ccit_id`),
+  KEY `ccmp_office_ccit_id` (`ccmp_office_ccit_id`),
+  CONSTRAINT `ccmp_company_ibfk_1` FOREIGN KEY (`ccmp_ccnt_id`) REFERENCES `ccnt_country` (`ccnt_id`),
+  CONSTRAINT `ccmp_company_ibfk_2` FOREIGN KEY (`ccmp_official_ccit_id`) REFERENCES `ccit_city` (`ccit_id`),
+  CONSTRAINT `ccmp_company_ibfk_3` FOREIGN KEY (`ccmp_office_ccit_id`) REFERENCES `ccit_city` (`ccit_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="fcrn_currency" view="colnames">
+<left>334</left>
+<top>232</top>
+<width>94</width>
+<height>110</height>
+<sql_create_table>CREATE TABLE `fcrn_currency` (
+  `fcrn_id` tinyint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fcrn_code` varchar(3) NOT NULL COMMENT 'Currency code ',
+  `fcrn_hide` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fcrn_id`),
+  KEY `fcrn_code` (`fcrn_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="stst_state" view="colnames">
+<left>334</left>
+<top>368</top>
+<width>97</width>
+<height>115</height>
+<sql_create_table>CREATE TABLE `stst_state` (
+  `stst_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `stst_name` varchar(50) COLLATE utf8_bin NOT NULL,
+  `stst_code` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `stst_icon` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`stst_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tiek definēti visi statusi - new, accepted, closed,...'</sql_create_table>
+</table>
+<table name="fvat_vat" view="colnames">
+<left>902</left>
+<top>363</top>
+<width>98</width>
+<height>126</height>
+<sql_create_table>CREATE TABLE `fvat_vat` (
+  `fvat_id` tinyint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `fvat_rate` double unsigned DEFAULT NULL,
+  `fvat_label` char(10) DEFAULT NULL,
+  `fvat_order` tinyint(11) unsigned NOT NULL DEFAULT '0',
+  `fvat_hide` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fvat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="fprc_product_category" view="colnames">
+<left>918</left>
+<top>43</top>
+<width>99</width>
+<height>110</height>
+<sql_create_table>CREATE TABLE `fprc_product_category` (
+  `fprc_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `fprc_code` char(10) NOT NULL,
+  `fprc_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`fprc_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="fiit_invoice_item" view="colnames">
+<left>705</left>
+<top>74</top>
+<width>156</width>
+<height>271</height>
+<sql_create_table>CREATE TABLE `fiit_invoice_item` (
+  `fiit_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fiit_finv_id` smallint(10) unsigned NOT NULL,
+  `fiit_desc` text,
+  `fiit_debet_facn_code` char(20) CHARACTER SET ascii DEFAULT NULL,
+  `fiit_credit_facn_code` char(20) CHARACTER SET ascii DEFAULT NULL,
+  `fiit_fprc_id` smallint(5) unsigned DEFAULT NULL,
+  `fiit_quantity` double NOT NULL,
+  `fiit_fqnt_id` tinyint(10) unsigned DEFAULT NULL,
+  `fiit_price` decimal(10,4) DEFAULT NULL,
+  `fiit_amt` decimal(10,2) DEFAULT NULL,
+  `fiit_vat` decimal(10,2) DEFAULT NULL,
+  `fiit_total` decimal(10,2) DEFAULT NULL,
+  `fiit_fvat_id` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`fiit_id`),
+  KEY `fiit_finv_id` (`fiit_finv_id`),
+  KEY `fiit_cqnt_id` (`fiit_fqnt_id`),
+  KEY `fiit_credit_facn_code` (`fiit_credit_facn_code`(4)),
+  KEY `fiit_debet_facn_code` (`fiit_debet_facn_code`(4),`fiit_id`,`fiit_quantity`),
+  KEY `fiit_fvat_id` (`fiit_fvat_id`),
+  KEY `fiit_fprc_id` (`fiit_fprc_id`),
+  CONSTRAINT `fiit_invoice_item_ibfk_1` FOREIGN KEY (`fiit_finv_id`) REFERENCES `finv_invoice` (`finv_id`),
+  CONSTRAINT `fiit_invoice_item_ibfk_2` FOREIGN KEY (`fiit_fvat_id`) REFERENCES `fvat_vat` (`fvat_id`),
+  CONSTRAINT `fiit_invoice_item_ibfk_3` FOREIGN KEY (`fiit_fprc_id`) REFERENCES `fprc_product_category` (`fprc_id`),
+  CONSTRAINT `fiit_invoice_item_ibfk_4` FOREIGN KEY (`fiit_fqnt_id`) REFERENCES `fqnt_quantity` (`fqnt_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="fqnt_quantity" view="colnames">
+<left>919</left>
+<top>183</top>
+<width>99</width>
+<height>94</height>
+<sql_create_table>CREATE TABLE `fqnt_quantity` (
+  `fqnt_id` tinyint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `fqnt_code` varchar(10) DEFAULT NULL,
+  `fqnt_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`fqnt_id`),
+  UNIQUE KEY `cqnt_name` (`fqnt_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
