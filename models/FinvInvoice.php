@@ -4,45 +4,39 @@
 Yii::setPathOfAlias('FinvInvoice', dirname(__FILE__));
 Yii::import('FinvInvoice.*');
 
-class FinvInvoice extends BaseFinvInvoice
-{
+class FinvInvoice extends BaseFinvInvoice {
 
     public $fiit = array();
-    
+
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
-    public static function model($className = __CLASS__)
-    {
+    public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
-    public function init()
-    {
+    public function init() {
         return parent::init();
     }
 
-    public function getItemLabel()
-    {
+    public function getItemLabel() {
         return parent::getItemLabel();
     }
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
-            parent::behaviors(),
-            array()
-        );    }
-
-    public function rules()
-    {
-        return array_merge(
-            parent::rules()
-        /* , array(
-          array('column1, column2', 'rule1'),
-          array('column3', 'rule2'),
-          ) */
+                parent::behaviors(), array()
         );
     }
-    
+
+    public function rules() {
+        return array_merge(
+                parent::rules()
+                /* , array(
+                  array('column1, column2', 'rule1'),
+                  array('column3', 'rule2'),
+                  ) */
+        );
+    }
+
     /**
      * ideja par fikso funkciju
      * @param type $param
@@ -50,9 +44,9 @@ class FinvInvoice extends BaseFinvInvoice
      * @param type $error
      * @return boolean
      */
-    static function p3insert($param,$scenario = FALSE, &$error){
+    static function p3insert($param, $scenario = FALSE, &$error) {
         $model = new FinvInvoice;
-        if($scenario){
+        if ($scenario) {
             $model->scenario = $this->scenario; //rulles var definēt pārbaudi
         }
 
@@ -67,14 +61,14 @@ class FinvInvoice extends BaseFinvInvoice
         } catch (Exception $e) {
             $model->addError('finv_id', $e->getMessage());
             return FALSE;
-        }        
+        }
     }
-    
-    public function createInvoice($invoice,$item){
-        
+
+    public function createInvoice($invoice) {
+
         //default values
         $invoice['finv_reg_date'] = date('Y-m-d');
-        
+
         //create invoice record
         $this->attributes = $invoice;
         try {
@@ -84,39 +78,41 @@ class FinvInvoice extends BaseFinvInvoice
         } catch (Exception $e) {
             $this->addError('finv_id', $e->getMessage());
             return FALSE;
-        }                
-        
-        foreach ($item as $param){
-            $fiit = new FiitInvoiceItem;
-            $fiit->attributes = $param;
-            $fiit->fiit_finv_id = $this->finv_id;
+        }
+        return $this->finv_id;
 
-            try {
-                if (!$fiit->save()) {
-                    $this->fiit[] = $fiit;
-                    return FALSE;
-                }
-                $this->fiit[] = $fiit;
-                continue;
-            } catch (Exception $e) {
-                $fiit->addError('fiit_id', $e->getMessage());
+    }
+
+    /**
+     * add item to invoice
+     * @param array $item
+     * @return int fiit_id
+     */
+    public function insertInvoiceItem($item) {
+        $fiit = new FiitInvoiceItem;
+        $fiit->attributes = $item;
+        $fiit->fiit_finv_id = $this->finv_id;
+
+        try {
+            if (!$fiit->save()) {
                 $this->fiit[] = $fiit;
                 return FALSE;
-            }              
+            }
+            $this->fiit[] = $fiit;
+        } catch (Exception $e) {
+            $fiit->addError('fiit_id', $e->getMessage());
+            $this->fiit[] = $fiit;
+            return FALSE;
         }
-        
-        //@todo add racalc
-        return TRUE;
-        
+        return $fiit->fiit_id;
     }
-    
-    public function getInvoiceErrors(){
+
+    public function getInvoiceErrors() {
         $error = $this->errors;
-        foreach ($this->fiit as $fiit){
-            $error = array_merge($error,$fiit->errors);
+        foreach ($this->fiit as $fiit) {
+            $error = array_merge($error, $fiit->errors);
         }
         return $error;
-        
     }
 
 }
