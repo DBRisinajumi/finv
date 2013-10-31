@@ -119,8 +119,8 @@ abstract class BaseFinvInvoice extends CActiveRecord
         );
     }
 
-    public function search($criteria = null)
-    {
+    public function getSearchCriteria($criteria = null){
+        
         if (is_null($criteria)) {
             $criteria = new CDbCriteria;
         }
@@ -146,10 +146,11 @@ abstract class BaseFinvInvoice extends CActiveRecord
         $criteria->compare('t.finv_basic_payment_before', $this->finv_basic_payment_before, true);
         $criteria->compare('t.finv_stst_id', $this->finv_stst_id);
         $criteria->compare('t.finv_paid', $this->finv_paid);
-
-        return new CActiveDataProvider(get_class($this), array(
-            'criteria' => $criteria,
-        ));
+        $criteria->compare('t.finv_ref', $this->finv_ref);
+        $criteria->compare('t.finv_ref_id', $this->finv_ref_id);
+        
+        return $criteria;
+        
     }
 
 }

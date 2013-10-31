@@ -115,4 +115,19 @@ class FinvInvoice extends BaseFinvInvoice {
         return $error;
     }
 
+    public function getTotalsBasicTotal(){
+        $criteria=$this->getSearchCriteria();
+        $criteria->select='SUM(finv_basic_total)';
+        return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(),$criteria)->queryScalar(),2,'.','');
+    }
+
+    public function search($criteria = null)
+    {
+        $criteria = $this->getSearchCriteria($criteria);
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria' => $criteria,
+        ));
+    }
+
+
 }
