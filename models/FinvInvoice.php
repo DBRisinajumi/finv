@@ -38,32 +38,10 @@ class FinvInvoice extends BaseFinvInvoice {
     }
 
     /**
-     * ideja par fikso funkciju
-     * @param type $param
-     * @param type $scenario
-     * @param type $error
-     * @return boolean
+     * create new invoice
+     * @param array $invoice
+     * @return FALSE/int finv_id
      */
-    static function p3insert($param, $scenario = FALSE, &$error) {
-        $model = new FinvInvoice;
-        if ($scenario) {
-            $model->scenario = $this->scenario; //rulles var definēt pārbaudi
-        }
-
-        $model->attributes = $param;
-
-        try {
-            if ($model->save()) {
-                return $model->primaryKey();
-            }
-            $error = $model->errors;
-            return FALSE;
-        } catch (Exception $e) {
-            $model->addError('finv_id', $e->getMessage());
-            return FALSE;
-        }
-    }
-
     public function createInvoice($invoice) {
 
         //default values
@@ -80,7 +58,6 @@ class FinvInvoice extends BaseFinvInvoice {
             return FALSE;
         }
         return $this->finv_id;
-
     }
 
     /**
@@ -107,6 +84,57 @@ class FinvInvoice extends BaseFinvInvoice {
         return $fiit->fiit_id;
     }
 
+    /**
+     * recalc totals
+     */
+    public function recalcInvoice($finv_id) {
+        $this->unsetAttributes();
+        $this->finv_id = $finv_id;
+        $this->refresh();
+        $this->finv_amt = 0;
+        $this->finv_total = 0;
+        $this->finv_vat = 0;
+
+        $criteria = new CDbCriteria;
+        $criteria->compare('t.fiit_finv_id', $finv_id);
+        $fiit_model = new FiitInvoiceItem();
+        $fiit_model->setAttribute('fiit_finv_id', $finv_id);
+        $fiits = $fiit_model->search();
+        foreach ($fiits as $fiit) {
+            $fiit->fiit_amt = round($fiit->fiit_price * $fiit->fiit_quantity, 2);
+            $fiit->fiit_total = $fiit->fiit_amt;
+            $fiit->fiit_vat = 0;
+            try {
+                if (!$fiit->save()) {
+                    $this->addError('', 'Can not update fiit item');
+                    return FALSE;
+                }
+            } catch (Exception $e) {
+                $this->addError('', $e->getMessage());
+                return FALSE;
+            }
+
+            $this->finv_amt += $fiit->fiit_amt;
+            $this->finv_total += $fiit->fiit_total;
+            $this->finv_vat += $fiit->fiit_vat;
+        }
+
+        $this->finv_basic_amt = Yii::app()->currency->convertToBase($this->finv_amt, $this->finv_fcrn_id, $this->finv_date);
+        $this->finv_basic_total = Yii::app()->currency->convertToBase($this->finv_total, $this->finv_fcrn_id, $this->finv_date);
+        $this->finv_basic_vat = Yii::app()->currency->convertToBase($this->finv_vat, $this->finv_fcrn_id, $this->finv_date);
+        try {
+            if (!$this->save()) {
+                $this->addError('', 'Can not update finv record');
+                return FALSE;
+            }
+        } catch (Exception $e) {
+            $this->addError('', $e->getMessage());
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
     public function getInvoiceErrors() {
         $error = $this->errors;
         foreach ($this->fiit as $fiit) {
@@ -115,19 +143,17 @@ class FinvInvoice extends BaseFinvInvoice {
         return $error;
     }
 
-    public function getTotalsBasicTotal(){
-        $criteria=$this->getSearchCriteria();
-        $criteria->select='SUM(finv_basic_total)';
-        return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(),$criteria)->queryScalar(),2,'.','');
+    public function getTotalsBasicTotal() {
+        $criteria = $this->getSearchCriteria();
+        $criteria->select = 'SUM(finv_basic_total)';
+        return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar(), 2, '.', '');
     }
 
-    public function search($criteria = null)
-    {
+    public function search($criteria = null) {
         $criteria = $this->getSearchCriteria($criteria);
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
         ));
     }
-
 
 }
