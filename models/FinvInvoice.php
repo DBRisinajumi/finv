@@ -21,6 +21,10 @@ class FinvInvoice extends BaseFinvInvoice {
         return parent::getItemLabel();
     }
 
+    public function getSeriesNumber() {
+        return $this->finv_series_number . '-'.$this->finv_number;
+    }
+
     public function behaviors() {
         return array_merge(
                 parent::behaviors(), array()
@@ -97,16 +101,16 @@ class FinvInvoice extends BaseFinvInvoice {
 
         $criteria = new CDbCriteria;
         $criteria->compare('t.fiit_finv_id', $finv_id);
-        $fiit_model = new FiitInvoiceItem();
-        $fiit_model->setAttribute('fiit_finv_id', $finv_id);
-        $fiits = $fiit_model->search();
+        //$fiit_model = new FiitInvoiceItem();
+        //$fiit_model->setAttribute('fiit_finv_id', $finv_id);
+        $fiits = FiitInvoiceItem::model()->findAll($criteria);
         foreach ($fiits as $fiit) {
             $fiit->fiit_amt = round($fiit->fiit_price * $fiit->fiit_quantity, 2);
             $fiit->fiit_total = $fiit->fiit_amt;
             $fiit->fiit_vat = 0;
             try {
                 if (!$fiit->save()) {
-                    $this->addError('', 'Can not update fiit item');
+                    $this->addError('fiit_id', 'Can not update fiit item');
                     return FALSE;
                 }
             } catch (Exception $e) {
@@ -124,11 +128,11 @@ class FinvInvoice extends BaseFinvInvoice {
         $this->finv_basic_vat = Yii::app()->currency->convertToBase($this->finv_vat, $this->finv_fcrn_id, $this->finv_date);
         try {
             if (!$this->save()) {
-                $this->addError('', 'Can not update finv record');
+                $this->addError('finv_id', 'Can not update finv record');
                 return FALSE;
             }
         } catch (Exception $e) {
-            $this->addError('', $e->getMessage());
+            $this->addError('finv_id', $e->getMessage());
             return FALSE;
         }
 
@@ -146,6 +150,12 @@ class FinvInvoice extends BaseFinvInvoice {
     public function getTotalsBasicTotal() {
         $criteria = $this->getSearchCriteria();
         $criteria->select = 'SUM(finv_basic_total)';
+        return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar(), 2, '.', '');
+    }
+
+    public function getTotalsTotal() {
+        $criteria = $this->getSearchCriteria();
+        $criteria->select = 'SUM(finv_total)';
         return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar(), 2, '.', '');
     }
 
