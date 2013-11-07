@@ -82,24 +82,23 @@ abstract class BaseFiitInvoiceItem extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'fiit_id' => Yii::t('FinvModule.crud', 'Fiit'),
-            'fiit_finv_id' => Yii::t('FinvModule.crud', 'Fiit Finv'),
-            'fiit_desc' => Yii::t('FinvModule.crud', 'Fiit Desc'),
-            'fiit_debet_facn_code' => Yii::t('FinvModule.crud', 'Fiit Debet Facn Code'),
-            'fiit_credit_facn_code' => Yii::t('FinvModule.crud', 'Fiit Credit Facn Code'),
-            'fiit_fprc_id' => Yii::t('FinvModule.crud', 'Fiit Fprc'),
-            'fiit_quantity' => Yii::t('FinvModule.crud', 'Fiit Quantity'),
-            'fiit_fqnt_id' => Yii::t('FinvModule.crud', 'Fiit Fqnt'),
-            'fiit_price' => Yii::t('FinvModule.crud', 'Fiit Price'),
-            'fiit_amt' => Yii::t('FinvModule.crud', 'Fiit Amt'),
-            'fiit_vat' => Yii::t('FinvModule.crud', 'Fiit Vat'),
-            'fiit_total' => Yii::t('FinvModule.crud', 'Fiit Total'),
-            'fiit_fvat_id' => Yii::t('FinvModule.crud', 'Fiit Fvat'),
+            'fiit_id' => Yii::t('FinvModule.crud', 'FiitId'),
+            'fiit_finv_id' => Yii::t('FinvModule.crud', 'FinvId'),
+            'fiit_desc' => Yii::t('FinvModule.crud', 'Description'),
+            'fiit_debet_facn_code' => Yii::t('FinvModule.crud', 'Debet account'),
+            'fiit_credit_facn_code' => Yii::t('FinvModule.crud', 'Credit account'),
+            'fiit_fprc_id' => Yii::t('FinvModule.crud', 'Price'),
+            'fiit_quantity' => Yii::t('FinvModule.crud', 'Quantity'),
+            'fiit_fqnt_id' => Yii::t('FinvModule.crud', 'Measure'),
+            'fiit_price' => Yii::t('FinvModule.crud', 'Unit price'),
+            'fiit_amt' => Yii::t('FinvModule.crud', 'Amount'),
+            'fiit_vat' => Yii::t('FinvModule.crud', 'VAT amount'),
+            'fiit_total' => Yii::t('FinvModule.crud', 'Total'),
+            'fiit_fvat_id' => Yii::t('FinvModule.crud', 'VAT'),
         );
     }
 
-    public function search($criteria = null)
-    {
+    public function getSearchCriteriaStatement($criteria = null){
         if (is_null($criteria)) {
             $criteria = new CDbCriteria;
         }
@@ -117,7 +116,13 @@ abstract class BaseFiitInvoiceItem extends CActiveRecord
         $criteria->compare('t.fiit_vat', $this->fiit_vat, true);
         $criteria->compare('t.fiit_total', $this->fiit_total, true);
         $criteria->compare('t.fiit_fvat_id', $this->fiit_fvat_id);
-
+        
+        return $criteria;
+        
+    }
+    public function search($criteria = null)
+    {
+        $criteria = $this->getSearchCriteriaStatement($criteria);
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
         ));

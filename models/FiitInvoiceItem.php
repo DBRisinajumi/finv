@@ -41,4 +41,15 @@ class FiitInvoiceItem extends BaseFiitInvoiceItem
         );
     }
 
+    public function getTotalsFiitQuantity(){
+        $criteria=$this->getSearchCriteriaStatement();
+        $criteria->select='SUM(fiit_quantity)';
+        return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(),$criteria)->queryScalar(),2,'.','');
+    }
+
+    public function getTotalsFiitTotal(){
+        $criteria=$this->getSearchCriteriaStatement();
+        $criteria->select='SUM(fiit_total)';
+        return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(),$criteria)->queryScalar(),2,'.','');
+    }
 }
