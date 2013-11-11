@@ -163,8 +163,9 @@ class FinvInvoice extends BaseFinvInvoice {
         $criteria = $this->getSearchCriteria($criteria);
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
-             'pagination' => array('pageSize' => 50),
-        ));
+            'pagination' => array('pageSize' => 50),
+            'sort' => array('defaultOrder' => 'finv_number',
+         )));
     }
 
 }
