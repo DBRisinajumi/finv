@@ -164,7 +164,7 @@ class FinvInvoice extends BaseFinvInvoice {
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 50),
-            'sort' => array('defaultOrder' => 'finv_id DESC',
+            'sort' => array('defaultOrder' => 'finv_number',
          )));
     }
 
