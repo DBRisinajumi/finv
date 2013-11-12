@@ -159,6 +159,12 @@ class FinvInvoice extends BaseFinvInvoice {
         return number_format($this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar(), 2, '.', '');
     }
 
+    public function getFinvIdList() {
+        $criteria = $this->getSearchCriteria();
+        $criteria->select = 'GROUP_CONCAT(finv_id SEPARATOR ",")';
+        return $this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar();
+    }
+
     public function search($criteria = null) {
         $criteria = $this->getSearchCriteria($criteria);
         return new CActiveDataProvider(get_class($this), array(
