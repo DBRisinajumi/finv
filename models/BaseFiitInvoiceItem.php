@@ -117,14 +117,17 @@ abstract class BaseFiitInvoiceItem extends CActiveRecord
         $criteria->compare('t.fiit_total', $this->fiit_total, true);
         $criteria->compare('t.fiit_fvat_id', $this->fiit_fvat_id);
         
+        $criteria->join = 'INNER JOIN finv_invoice ON fiit_finv_id = finv_id';
         return $criteria;
         
     }
     public function search($criteria = null)
     {
         $criteria = $this->getSearchCriteriaStatement($criteria);
-        return new CActiveDataProvider(get_class($this), array(
+        return  new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
+            'pagination' => array('pageSize' => 50),
+            'sort' => array('defaultOrder' => 'finv_number'),
         ));
     }
 
