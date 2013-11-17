@@ -117,6 +117,8 @@ abstract class BaseFiitInvoiceItem extends CActiveRecord
         $criteria->compare('t.fiit_total', $this->fiit_total, true);
         $criteria->compare('t.fiit_fvat_id', $this->fiit_fvat_id);
         
+        if ($this->finv_ref_id) $criteria->addCondition ("finv_ref = 'BPRD' AND finv_ref_id =".$this->finv_ref_id);
+        
         $criteria->join = 'INNER JOIN finv_invoice ON fiit_finv_id = finv_id';
         return $criteria;
         

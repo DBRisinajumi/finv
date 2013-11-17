@@ -7,6 +7,10 @@ Yii::import('FiitInvoiceItem.*');
 class FiitInvoiceItem extends BaseFiitInvoiceItem
 {
 
+    //invoice attribute
+    public $finv_ref = 'BPRD';
+    public $finv_ref_id;
+    
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
     {
