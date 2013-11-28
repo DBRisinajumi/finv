@@ -36,6 +36,13 @@
  */
 abstract class BaseFinvInvoice extends CActiveRecord
 {
+    /**
+    * ENUM field values as constants
+    */
+    const FINV_PAID_IS_PAID = 'is paid';
+    const FINV_PAID_NOT_PAID = 'not paid';
+    const FINV_PAID_PARTLY_PAID = 'partly paid';
+    const FINV_REF_BPRD = 'BPRD';
 
     public static function model($className = __CLASS__)
     {
@@ -53,9 +60,10 @@ abstract class BaseFinvInvoice extends CActiveRecord
             parent::rules(), array(
                 array('finv_number, finv_issuer_ccmp_id, finv_payer_ccmp_id, finv_reg_date, finv_fcrn_id, finv_basic_fcrn_id', 'required'),
                 array('finv_series_number, finv_date, finv_budget_date, finv_due_date, finv_notes, finv_amt, finv_vat, finv_total, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before, finv_stst_id, finv_paid, finv_ref,finv_ref_id', 'default', 'setOnEmpty' => true, 'value' => null),
-                array('finv_fcrn_id, finv_basic_fcrn_id, finv_stst_id, finv_paid', 'numerical', 'integerOnly' => true),
+                array('finv_fcrn_id, finv_basic_fcrn_id, finv_stst_id', 'numerical', 'integerOnly' => true),
                 array('finv_series_number, finv_issuer_ccmp_id, finv_payer_ccmp_id, finv_amt, finv_vat, finv_total, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before', 'length', 'max' => 10),
                 array('finv_number', 'length', 'max' => 20),
+                array('finv_paid', 'length', 'max' => 11),
                 array('finv_date, finv_budget_date, finv_due_date, finv_notes, finv_ref,finv_ref_id', 'safe'),
                 array('finv_id, finv_series_number, finv_number, finv_issuer_ccmp_id, finv_payer_ccmp_id, finv_reg_date, finv_date, finv_budget_date, finv_due_date, finv_notes, finv_fcrn_id, finv_amt, finv_vat, finv_total, finv_basic_fcrn_id, finv_basic_amt, finv_basic_vat, finv_basic_total, finv_basic_payment_before, finv_stst_id, finv_paid', 'safe', 'on' => 'search'),
             )
@@ -93,30 +101,81 @@ abstract class BaseFinvInvoice extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'finv_id' => Yii::t('FinvModule.crud', 'Finv'),
-            'finv_series_number' => Yii::t('FinvModule.crud', 'Finv Series Number'),
-            'finv_number' => Yii::t('FinvModule.crud', 'Finv Number'),
-            'finv_issuer_ccmp_id' => Yii::t('FinvModule.crud', 'Finv Issuer Ccmp'),
-            'finv_payer_ccmp_id' => Yii::t('FinvModule.crud', 'Finv Payer Ccmp'),
-            'finv_reg_date' => Yii::t('FinvModule.crud', 'Finv Reg Date'),
-            'finv_date' => Yii::t('FinvModule.crud', 'Finv Date'),
-            'finv_budget_date' => Yii::t('FinvModule.crud', 'Finv Budget Date'),
-            'finv_due_date' => Yii::t('FinvModule.crud', 'Finv Due Date'),
-            'finv_notes' => Yii::t('FinvModule.crud', 'Finv Notes'),
-            'finv_fcrn_id' => Yii::t('FinvModule.crud', 'Finv Fcrn'),
-            'finv_amt' => Yii::t('FinvModule.crud', 'Finv Amt'),
-            'finv_vat' => Yii::t('FinvModule.crud', 'Finv Vat'),
-            'finv_total' => Yii::t('FinvModule.crud', 'Finv Total'),
-            'finv_basic_fcrn_id' => Yii::t('FinvModule.crud', 'Finv Basic Fcrn'),
-            'finv_basic_amt' => Yii::t('FinvModule.crud', 'Finv Basic Amt'),
-            'finv_basic_vat' => Yii::t('FinvModule.crud', 'Finv Basic Vat'),
-            'finv_basic_total' => Yii::t('FinvModule.crud', 'Finv Basic Total'),
-            'finv_basic_payment_before' => Yii::t('FinvModule.crud', 'Finv Basic Payment Before'),
-            'finv_stst_id' => Yii::t('FinvModule.crud', 'Finv Stst'),
-            'finv_paid' => Yii::t('FinvModule.crud', 'Finv Paid'),
+            'finv_id' => Yii::t('FinvModule.crud', 'FinvId'),
+            'finv_series_number' => Yii::t('FinvModule.crud', 'Series'),
+            'finv_number' => Yii::t('FinvModule.crud', 'Number'),
+            'finv_issuer_ccmp_id' => Yii::t('FinvModule.crud', 'Issuer'),
+            'finv_payer_ccmp_id' => Yii::t('FinvModule.crud', 'Payer'),
+            'finv_reg_date' => Yii::t('FinvModule.crud', 'Registred'),
+            'finv_date' => Yii::t('FinvModule.crud', 'Date'),
+            'finv_budget_date' => Yii::t('FinvModule.crud', 'Budget Date'),
+            'finv_due_date' => Yii::t('FinvModule.crud', 'Due Date'),
+            'finv_notes' => Yii::t('FinvModule.crud', 'Notes'),
+            'finv_fcrn_id' => Yii::t('FinvModule.crud', 'Currency'),
+            'finv_amt' => Yii::t('FinvModule.crud', 'Amount'),
+            'finv_vat' => Yii::t('FinvModule.crud', 'VAT'),
+            'finv_total' => Yii::t('FinvModule.crud', 'Total'),
+            'finv_basic_fcrn_id' => Yii::t('FinvModule.crud', 'Base currency'),
+            'finv_basic_amt' => Yii::t('FinvModule.crud', 'Base amount'),
+            'finv_basic_vat' => Yii::t('FinvModule.crud', 'Base VAT'),
+            'finv_basic_total' => Yii::t('FinvModule.crud', 'Base Total'),
+            'finv_basic_payment_before' => Yii::t('FinvModule.crud', 'Base Payment Before'),
+            'finv_stst_id' => Yii::t('FinvModule.crud', 'Status'),
+            'finv_paid' => Yii::t('FinvModule.crud', 'Payment status'),
             'finv_ref' => Yii::t('FinvModule.crud', 'REF'),
             'finv_ref_id' => Yii::t('FinvModule.crud', 'REF ID'),
         );
+    }
+
+    public function enumLabels()
+    {
+        return array(
+           'finv_paid' => array(
+               'is paid' => Yii::t('FinvModule.crud', 'Is Paid'),
+               'not paid' => Yii::t('FinvModule.crud', 'Not Paid'),
+               'partly paid' => Yii::t('FinvModule.crud', 'Partly Paid'),
+           ),
+           'finv_ref' => array(
+               'BPRD' => Yii::t('FinvModule.crud', 'Bprd'),
+           ),
+            );
+    }
+
+    public function getEnumFieldLabels($column){
+
+        $aLabels = $this->enumLabels();
+        if(!isset($aLabels[$column])){
+            return FALSE;
+        }
+        return $aLabels[$column];
+    }
+
+    public function getEnumFieldValuetext($column){
+
+        $aLabels = $this->enumLabels();
+        if(!isset($aLabels[$column])){
+            return FALSE;
+        }
+        $aVT = array();
+        foreach($aLabels[$column] as $value => $text){
+            $aVT[] = array('value'=>$value,'text'=>$text);
+        }
+        return $aVT;
+    }
+
+    public function getEnumLabel($column,$value){
+
+        $aLabels = $this->enumLabels();
+
+        if(!isset($aLabels[$column])){
+            return $value;
+        }
+
+        if(!isset($aLabels[$column][$value])){
+            return $value;
+        }
+
+        return $aLabels[$column][$value];
     }
 
     public function getSearchCriteria($criteria = null){

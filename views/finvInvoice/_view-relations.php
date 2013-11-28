@@ -1,9 +1,13 @@
+
+<!--
 <h2>
     <?php echo Yii::t('FinvModule.crud_static', 'Relations') ?></h2>
+-->
 
 
 <?php 
-        echo '<h3>FiitInvoiceItems ';
+        echo '<h3>';
+            echo Yii::t('FinvModule.crud','relation.FiitInvoiceItems').' ';
             $this->widget(
                 'bootstrap.widgets.TbButtonGroup',
                 array(
@@ -12,7 +16,7 @@
                     'buttons' => array(
                         array(
                             'icon' => 'icon-list-alt',
-                            'url' =>  array('//finv/fiitInvoiceItem/admin')
+                            'url' =>  array('//finv/fiitInvoiceItem/admin','FiitInvoiceItem' => array('fiit_finv_id' => $model->{$model->tableSchema->primaryKey}))
                         ),
                         array(
                 'icon' => 'icon-plus',

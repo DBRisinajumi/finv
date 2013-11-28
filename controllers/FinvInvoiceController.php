@@ -9,26 +9,47 @@ class FinvInvoiceController extends Controller
     public $scenario = "crud";
     public $scope = "crud";
 
+
 public function filters()
 {
-return array(
-'accessControl',
-);
+    return array(
+        'accessControl',
+    );
 }
 
 public function accessRules()
 {
-return array(
-array(
-'allow',
-'actions' => array('create', 'editableSaver', 'update', 'delete', 'admin', 'view'),
-'roles' => array('Finv.FinvInvoice.*'),
-),
-array(
-'deny',
-'users' => array('*'),
-),
-);
+     return array(
+        array(
+            'allow',
+            'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete'),
+            'roles' => array('Finv.FinvInvoice.*'),
+        ),
+        array(
+            'allow',
+            'actions' => array('create'),
+            'roles' => array('Finv.FinvInvoice.Create'),
+        ),
+        array(
+            'allow',
+            'actions' => array('view', 'admin'), // let the user view the grid
+            'roles' => array('Finv.FinvInvoice.View'),
+        ),
+        array(
+            'allow',
+            'actions' => array('update', 'editableSaver'),
+            'roles' => array('Finv.FinvInvoice.Update'),
+        ),
+        array(
+            'allow',
+            'actions' => array('delete'),
+            'roles' => array('Finv.FinvInvoice.Delete'),
+        ),
+        array(
+            'deny',
+            'users' => array('*'),
+        ),
+    );
 }
 
     public function beforeAction($action)
@@ -103,8 +124,8 @@ array(
 
     public function actionEditableSaver()
     {
-        Yii::import('EditableSaver'); //or you can add import 'ext.editable.*' to config
-        $es = new EditableSaver('FinvInvoice'); // classname of model to be updated
+        Yii::import('TbEditableSaver');
+        $es = new TbEditableSaver('FinvInvoice'); // classname of model to be updated
         $es->update();
     }
 

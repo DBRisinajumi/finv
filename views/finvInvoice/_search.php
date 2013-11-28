@@ -163,7 +163,17 @@
 
     <div class="row">
         <?php echo $form->label($model, 'finv_paid'); ?>
-        <?php echo $form->textField($model, 'finv_paid'); ?>
+        <?php echo CHtml::activeDropDownList($model, 'finv_paid', $model->getEnumFieldLabels('finv_paid')); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->label($model, 'finv_ref'); ?>
+        <?php echo CHtml::activeDropDownList($model, 'finv_ref', $model->getEnumFieldLabels('finv_ref')); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->label($model, 'finv_ref_id'); ?>
+        <?php echo $form->textField($model, 'finv_ref_id', array('size' => 10, 'maxlength' => 10)); ?>
     </div>
 
 

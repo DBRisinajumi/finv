@@ -12,10 +12,14 @@ $this->breadcrumbs[] = Yii::t('FinvModule.crud_static', 'View');
 ?>
 
 <?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
-<h1>
-    <?php echo Yii::t('FinvModule.crud','Finv Invoice')?>
-    <small><?php echo Yii::t('FinvModule.crud_static','View')?> #<?php echo $model->finv_id ?></small>
-    </h1>
+    <h1>
+        <?php echo Yii::t('FinvModule.crud','Finv Invoice')?>
+        <small>
+            <?php echo $model->itemLabel ?>
+
+        </small>
+
+        </h1>
 
 
 
@@ -26,7 +30,7 @@ $this->breadcrumbs[] = Yii::t('FinvModule.crud_static', 'View');
     <div class="span7">
         <h2>
             <?php echo Yii::t('FinvModule.crud_static','Data')?>            <small>
-                <?php echo $model->itemLabel?>            </small>
+                #<?php echo $model->finv_id ?>            </small>
         </h2>
 
         <?php
@@ -39,7 +43,7 @@ $this->breadcrumbs[] = Yii::t('FinvModule.crud_static', 'View');
                         'name' => 'finv_id',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_id',
@@ -52,7 +56,7 @@ array(
                         'name' => 'finv_series_number',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_series_number',
@@ -65,7 +69,7 @@ array(
                         'name' => 'finv_number',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_number',
@@ -100,7 +104,7 @@ array(
                         'name' => 'finv_reg_date',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_reg_date',
@@ -113,7 +117,7 @@ array(
                         'name' => 'finv_date',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_date',
@@ -126,7 +130,7 @@ array(
                         'name' => 'finv_budget_date',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_budget_date',
@@ -139,7 +143,7 @@ array(
                         'name' => 'finv_due_date',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_due_date',
@@ -152,7 +156,7 @@ array(
                         'name' => 'finv_notes',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_notes',
@@ -176,7 +180,7 @@ array(
                         'name' => 'finv_amt',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_amt',
@@ -189,7 +193,7 @@ array(
                         'name' => 'finv_vat',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_vat',
@@ -202,7 +206,7 @@ array(
                         'name' => 'finv_total',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_total',
@@ -226,7 +230,7 @@ array(
                         'name' => 'finv_basic_amt',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_basic_amt',
@@ -239,7 +243,7 @@ array(
                         'name' => 'finv_basic_vat',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_basic_vat',
@@ -252,7 +256,7 @@ array(
                         'name' => 'finv_basic_total',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_basic_total',
@@ -265,7 +269,7 @@ array(
                         'name' => 'finv_basic_payment_before',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
                                 'attribute' => 'finv_basic_payment_before',
@@ -285,14 +289,22 @@ array(
                             array('class' => '')):'n/a',
             'type' => 'html',
         ),
+        array(
+                    'name' => 'finv_paid',
+                    'value' => $model->getEnumLabel('finv_paid',$model->finv_paid),
+        ),
+        array(
+                    'name' => 'finv_ref',
+                    'value' => $model->getEnumLabel('finv_ref',$model->finv_ref),
+        ),
 array(
-                        'name' => 'finv_paid',
+                        'name' => 'finv_ref_id',
                         'type' => 'raw',
                         'value' => $this->widget(
-                            'EditableField',
+                            'TbEditableField',
                             array(
                                 'model' => $model,
-                                'attribute' => 'finv_paid',
+                                'attribute' => 'finv_ref_id',
                                 'url' => $this->createUrl('/finv/finvInvoice/editableSaver'),
                             ),
                             true
@@ -302,6 +314,11 @@ array(
         )); ?>
     </div>
 
+
     <div class="span5">
-        <?php $this->renderPartial('_view-relations',array('model' => $model)); ?>    </div>
+        <div class="well">
+            <?php $this->renderPartial('_view-relations',array('model' => $model)); ?>        </div>
+    </div>
 </div>
+
+<?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>

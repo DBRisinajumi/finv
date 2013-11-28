@@ -10,75 +10,79 @@
             'id' => 'finv-invoice-form',
             'enableAjaxValidation' => true,
             'enableClientValidation' => true,
+            'htmlOptions' => array(
+                'enctype' => ''
+            )
         ));
 
         echo $form->errorSummary($model);
     ?>
     
     <div class="row">
-        <div class="span7"> <!-- main inputs -->
+        <div class="span7">
             <h2>
                 <?php echo Yii::t('FinvModule.crud_static','Data')?>                <small>
-                    <?php echo $model->itemLabel ?>
-                </small>
+                    #<?php echo $model->finv_id ?>                </small>
 
             </h2>
 
 
             <div class="form-horizontal">
 
-                
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php  ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_id')) != 'tooltip.finv_id')?$t:'' ?>'>
+                                <?php
                             ;
                             echo $form->error($model,'finv_id')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_id')) != 'FinvInvoice.finv_id')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_series_number') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_series_number')) != 'tooltip.finv_series_number')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_series_number', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_series_number')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_series_number')) != 'FinvInvoice.finv_series_number')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_number') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_number')) != 'tooltip.finv_number')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_number', array('size' => 20, 'maxlength' => 20));
                             echo $form->error($model,'finv_number')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_number')) != 'FinvInvoice.finv_number')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_issuer_ccmp_id') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_issuer_ccmp_id')) != 'tooltip.finv_issuer_ccmp_id')?$t:'' ?>'>
+                                <?php
                             $this->widget(
                 '\GtcRelation',
                 array(
@@ -93,19 +97,19 @@
                 )
                 );
                             echo $form->error($model,'finv_issuer_ccmp_id')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_issuer_ccmp_id')) != 'FinvInvoice.finv_issuer_ccmp_id')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_payer_ccmp_id') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_payer_ccmp_id')) != 'tooltip.finv_payer_ccmp_id')?$t:'' ?>'>
+                                <?php
                             $this->widget(
                 '\GtcRelation',
                 array(
@@ -120,19 +124,19 @@
                 )
                 );
                             echo $form->error($model,'finv_payer_ccmp_id')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_payer_ccmp_id')) != 'FinvInvoice.finv_payer_ccmp_id')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_reg_date') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_reg_date')) != 'tooltip.finv_reg_date')?$t:'' ?>'>
+                                <?php
                             $this->widget('zii.widgets.jui.CJuiDatePicker',
                          array(
                                  'model' => $model,
@@ -149,19 +153,19 @@
                              );
                     ;
                             echo $form->error($model,'finv_reg_date')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_reg_date')) != 'FinvInvoice.finv_reg_date')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_date') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_date')) != 'tooltip.finv_date')?$t:'' ?>'>
+                                <?php
                             $this->widget('zii.widgets.jui.CJuiDatePicker',
                          array(
                                  'model' => $model,
@@ -178,19 +182,19 @@
                              );
                     ;
                             echo $form->error($model,'finv_date')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_date')) != 'FinvInvoice.finv_date')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_budget_date') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_budget_date')) != 'tooltip.finv_budget_date')?$t:'' ?>'>
+                                <?php
                             $this->widget('zii.widgets.jui.CJuiDatePicker',
                          array(
                                  'model' => $model,
@@ -207,19 +211,19 @@
                              );
                     ;
                             echo $form->error($model,'finv_budget_date')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_budget_date')) != 'FinvInvoice.finv_budget_date')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_due_date') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_due_date')) != 'tooltip.finv_due_date')?$t:'' ?>'>
+                                <?php
                             $this->widget('zii.widgets.jui.CJuiDatePicker',
                          array(
                                  'model' => $model,
@@ -236,34 +240,34 @@
                              );
                     ;
                             echo $form->error($model,'finv_due_date')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_due_date')) != 'FinvInvoice.finv_due_date')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_notes') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_notes')) != 'tooltip.finv_notes')?$t:'' ?>'>
+                                <?php
                             echo $form->textArea($model, 'finv_notes', array('rows' => 6, 'cols' => 50));
                             echo $form->error($model,'finv_notes')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_notes')) != 'FinvInvoice.finv_notes')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_fcrn_id') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_fcrn_id')) != 'tooltip.finv_fcrn_id')?$t:'' ?>'>
+                                <?php
                             $this->widget(
                 '\GtcRelation',
                 array(
@@ -278,64 +282,64 @@
                 )
                 );
                             echo $form->error($model,'finv_fcrn_id')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_fcrn_id')) != 'FinvInvoice.finv_fcrn_id')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_amt') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_amt')) != 'tooltip.finv_amt')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_amt', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_amt')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_amt')) != 'FinvInvoice.finv_amt')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_vat') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_vat')) != 'tooltip.finv_vat')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_vat', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_vat')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_vat')) != 'FinvInvoice.finv_vat')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_total') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_total')) != 'tooltip.finv_total')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_total', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_total')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_total')) != 'FinvInvoice.finv_total')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_basic_fcrn_id') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_basic_fcrn_id')) != 'tooltip.finv_basic_fcrn_id')?$t:'' ?>'>
+                                <?php
                             $this->widget(
                 '\GtcRelation',
                 array(
@@ -350,79 +354,79 @@
                 )
                 );
                             echo $form->error($model,'finv_basic_fcrn_id')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_basic_fcrn_id')) != 'FinvInvoice.finv_basic_fcrn_id')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_basic_amt') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_basic_amt')) != 'tooltip.finv_basic_amt')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_basic_amt', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_basic_amt')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_basic_amt')) != 'FinvInvoice.finv_basic_amt')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_basic_vat') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_basic_vat')) != 'tooltip.finv_basic_vat')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_basic_vat', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_basic_vat')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_basic_vat')) != 'FinvInvoice.finv_basic_vat')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_basic_total') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_basic_total')) != 'tooltip.finv_basic_total')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_basic_total', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_basic_total')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_basic_total')) != 'FinvInvoice.finv_basic_total')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_basic_payment_before') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_basic_payment_before')) != 'tooltip.finv_basic_payment_before')?$t:'' ?>'>
+                                <?php
                             echo $form->textField($model, 'finv_basic_payment_before', array('size' => 10, 'maxlength' => 10));
                             echo $form->error($model,'finv_basic_payment_before')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_basic_payment_before')) != 'FinvInvoice.finv_basic_payment_before')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_stst_id') ?>
                         </div>
                         <div class='controls'>
-                            <?php
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_stst_id')) != 'tooltip.finv_stst_id')?$t:'' ?>'>
+                                <?php
                             $this->widget(
                 '\GtcRelation',
                 array(
@@ -437,42 +441,71 @@
                 )
                 );
                             echo $form->error($model,'finv_stst_id')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_stst_id')) != 'FinvInvoice.finv_stst_id')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
-                
+                    <?php  ?>
+                                    <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
                             <?php echo $form->labelEx($model, 'finv_paid') ?>
                         </div>
                         <div class='controls'>
-                            <?php
-                            echo $form->textField($model, 'finv_paid');
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_paid')) != 'tooltip.finv_paid')?$t:'' ?>'>
+                                <?php
+                            echo CHtml::activeDropDownList($model, 'finv_paid', $model->getEnumFieldLabels('finv_paid'));
                             echo $form->error($model,'finv_paid')
-                            ?>
-                            <span class="help-block">
-                                <?php echo (($t = Yii::t('FinvModule.crud', 'FinvInvoice.finv_paid')) != 'FinvInvoice.finv_paid')?$t:'' ?>
-                            </span>
+                            ?>                            </span>
                         </div>
                     </div>
+                    <?php  ?>
+                                    <?php  ?>
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'finv_ref') ?>
+                        </div>
+                        <div class='controls'>
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_ref')) != 'tooltip.finv_ref')?$t:'' ?>'>
+                                <?php
+                            echo CHtml::activeDropDownList($model, 'finv_ref', $model->getEnumFieldLabels('finv_ref'));
+                            echo $form->error($model,'finv_ref')
+                            ?>                            </span>
+                        </div>
+                    </div>
+                    <?php  ?>
+                                    <?php  ?>
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'finv_ref_id') ?>
+                        </div>
+                        <div class='controls'>
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('FinvModule.crud', 'tooltip.finv_ref_id')) != 'tooltip.finv_ref_id')?$t:'' ?>'>
+                                <?php
+                            echo $form->textField($model, 'finv_ref_id', array('size' => 10, 'maxlength' => 10));
+                            echo $form->error($model,'finv_ref_id')
+                            ?>                            </span>
+                        </div>
+                    </div>
+                    <?php  ?>
                 
             </div>
         </div>
         <!-- main inputs -->
 
-        <div class="span5"> <!-- sub inputs -->
-            <h2>
-                <?php echo Yii::t('FinvModule.crud_static','Relations')?>
-            </h2>
+        
+        <div class="span5"><!-- sub inputs -->
+            <div class="well">
+            <!--<h2>
+                <?php echo Yii::t('FinvModule.crud_static','Relations')?>            </h2>-->
                                             
                 <h3>
-                    <?php echo Yii::t('FinvModule.crud', 'FiitInvoiceItems'); ?>
+                    <?php echo Yii::t('FinvModule.crud', 'relation.FiitInvoiceItems'); ?>
                 </h3>
-                <?php echo '<i>Switch to view mode to edit related records.</i>' ?>
-                                                                                                            
+                <?php echo '<i>'.Yii::t('FinvModule.crud_static','Switch to view mode to edit related records.').'</i>' ?>
+                                                                                                                        </div>
         </div>
         <!-- sub inputs -->
     </div>
@@ -481,7 +514,8 @@
         <?php echo Yii::t('FinvModule.crud_static','Fields with <span class="required">*</span> are required.');?>
     </p>
 
-    <div class="form-actions">
+    <!-- TODO: We need the buttons inside the form, when a user hits <enter> -->
+    <div class="form-actions" style="visibility: hidden; height: 1px">
         
         <?php
             echo CHtml::Button(

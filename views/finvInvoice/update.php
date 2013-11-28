@@ -16,8 +16,10 @@ $this->breadcrumbs[] = Yii::t('FinvModule.crud_static', 'Update');
         
         <?php echo Yii::t('FinvModule.crud','Finv Invoice'); ?>
         <small>
-            <?php echo Yii::t('FinvModule.crud_static','Update')?> #<?php echo $model->finv_id ?>
+            <?php echo $model->itemLabel ?>
+
         </small>
+
         
     </h1>
 
@@ -26,3 +28,5 @@ $this->breadcrumbs[] = Yii::t('FinvModule.crud_static', 'Update');
 <?php
     $this->renderPartial('_form', array('model' => $model));
 ?>
+
+<?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>
