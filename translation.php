@@ -2,7 +2,7 @@
 /**
 * generate translation files
 * in app directory start:
-* yiic message G:\xdocs\app-0.21.0_20131018\appParkOil/../vendor\dbrisinajumi\finv\translation.php
+* yiic message ../vendor/dbrisinajumi/finv/translation.php
 */
 return array(
     'sourcePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR ,  //root dir of all source
