@@ -164,6 +164,19 @@ class FinvInvoice extends BaseFinvInvoice {
         $criteria->select = 'GROUP_CONCAT(finv_id SEPARATOR ",")';
         return $this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar();
     }
+    
+    public function getCssClass(){
+        
+        $today = date('Y-m-d');
+        if (strtotime($this->finv_due_date) >= strtotime($today))
+        {
+            return 'row-pending';
+        }
+        elseif ($this->finv_paid == 'not paid') return 'row-notpaid';
+        elseif ($this->finv_paid == 'is paid') return 'row-paid';
+        elseif ($this->finv_paid == 'partly paid') return 'row-partlypaid';
+    }
+            
 
     public function search($criteria = null) {
         $criteria = $this->getSearchCriteria($criteria);
