@@ -170,7 +170,7 @@ class FinvInvoice extends BaseFinvInvoice {
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 50),
-            'sort' => array('defaultOrder' => 'finv_series_number, LPAD(finv_number,10,\'0\')',
+            'sort' => array('defaultOrder' => 'finv_series_number, LPAD(finv_number,10,\' \')',
          )));
     }
 
