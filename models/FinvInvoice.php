@@ -8,6 +8,12 @@ class FinvInvoice extends BaseFinvInvoice {
 
     public $fiit = array();
 
+    public $finv_date_from;
+    public $finv_date_to;
+    public $finv_due_date_from;
+    public $finv_due_date_to;
+
+
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -31,13 +37,12 @@ class FinvInvoice extends BaseFinvInvoice {
         );
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array_merge(
-                parent::rules()
-                /* , array(
-                  array('column1, column2', 'rule1'),
-                  array('column3', 'rule2'),
-                  ) */
+            parent::rules(), array(
+                array('finv_date_from,finv_date_to,finv_due_date_from,finv_due_date_to', 'safe', 'on' => 'search'),
+            )
         );
     }
 
@@ -178,8 +183,37 @@ class FinvInvoice extends BaseFinvInvoice {
     }
             
 
+    public function getSearchCriteria($criteria = null) {
+
+        $criteria = parent::getSearchCriteria($criteria);
+
+        /**
+         * filter date to from
+         */
+        if(!empty($this->finv_date_from)){
+            $criteria->AddCondition("t.finv_date >= '".$this->finv_date_from."'");
+        }
+
+        if(!empty($this->finv_date_to)){
+            $criteria->AddCondition("t.finv_date <= '".$this->finv_date_to."'");
+        }
+
+        if(!empty($this->finv_due_date_from)){
+            $criteria->AddCondition("t.finv_due_date >= '".$this->finv_due_date_from."'");
+        }
+
+        if(!empty($this->finv_due_date_to)){
+            $criteria->AddCondition("t.finv_due_date <= '".$this->finv_due_date_to."'");
+        }
+
+        return $criteria;
+
+    }
+
     public function search($criteria = null) {
+
         $criteria = $this->getSearchCriteria($criteria);
+
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 50),
