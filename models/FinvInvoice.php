@@ -12,6 +12,7 @@ class FinvInvoice extends BaseFinvInvoice {
     public $finv_date_to;
     public $finv_due_date_from;
     public $finv_due_date_to;
+    public $range;
 
 
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
@@ -205,6 +206,8 @@ class FinvInvoice extends BaseFinvInvoice {
         if(!empty($this->finv_due_date_to)){
             $criteria->AddCondition("t.finv_due_date <= '".$this->finv_due_date_to."'");
         }
+        
+        if(!empty($this->range) ) DbrLib::addRangeCriteria ($criteria, $this->range, 't.finv_due_date');
 
         return $criteria;
 
