@@ -23,27 +23,27 @@ public function accessRules()
         array(
             'allow',
             'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete'),
-            'roles' => array('Finv.FinvInvoice.*'),
+            'roles' => array('Invoices'),
         ),
         array(
             'allow',
             'actions' => array('create'),
-            'roles' => array('Finv.FinvInvoice.Create'),
+            'roles' => array('Invoices'),
         ),
         array(
             'allow',
             'actions' => array('view', 'admin'), // let the user view the grid
-            'roles' => array('Finv.FinvInvoice.View'),
+            'roles' => array('Invoices'),
         ),
         array(
             'allow',
             'actions' => array('update', 'editableSaver'),
-            'roles' => array('Finv.FinvInvoice.Update'),
+            'roles' => array('Invoices'),
         ),
         array(
             'allow',
             'actions' => array('delete'),
-            'roles' => array('Finv.FinvInvoice.Delete'),
+            'roles' => array('Invoices'),
         ),
         array(
             'deny',
