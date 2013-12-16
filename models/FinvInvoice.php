@@ -169,7 +169,7 @@ class FinvInvoice extends BaseFinvInvoice {
         $criteria = $this->getSearchCriteria();
         $criteria->select = 'GROUP_CONCAT(finv_id SEPARATOR ",")';
         $list = $this->commandBuilder->createFindCommand($this->getTableSchema(), $criteria)->queryScalar();
-        return trim(trim($str),',');
+        return trim(trim($list),',');
     }
     
     public function getCssClass(){
