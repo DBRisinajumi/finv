@@ -8,10 +8,8 @@ class FinvInvoice extends BaseFinvInvoice {
 
     public $fiit = array();
 
-    public $finv_date_from;
-    public $finv_date_to;
-    public $finv_due_date_from;
-    public $finv_due_date_to;
+    public $finv_date_range;
+    public $finv_due_range;
     public $range;
 
 
@@ -191,23 +189,19 @@ class FinvInvoice extends BaseFinvInvoice {
         /**
          * filter date to from
          */
-        if(!empty($this->finv_date_from)){
-            $criteria->AddCondition("t.finv_date >= '".$this->finv_date_from."'");
-        }
-
-        if(!empty($this->finv_date_to)){
-            $criteria->AddCondition("t.finv_date <= '".$this->finv_date_to."'");
-        }
-
-        if(!empty($this->finv_due_date_from)){
-            $criteria->AddCondition("t.finv_due_date >= '".$this->finv_due_date_from."'");
-        }
-
-        if(!empty($this->finv_due_date_to)){
-            $criteria->AddCondition("t.finv_due_date <= '".$this->finv_due_date_to."'");
+         if(!empty($this->finv_date_range)){
+            $criteria->AddCondition("t.finv_date >= '".substr($this->finv_date_range,0,10)."'");
+            $criteria->AddCondition("t.finv_date <= '".substr($this->finv_date_range,-10)."'");    
+            
         }
         
-        if(!empty($this->range) ) DbrLib::addRangeCriteria ($criteria, $this->range, 't.finv_due_date');
+         if(!empty($this->finv_due_date_range)){
+            $criteria->AddCondition("t.finv_due_date >= '".substr($this->finv_due_date_range,0,10)."'");
+            $criteria->AddCondition("t.finv_due_date <= '".substr($this->finv_due_date_range,-10)."'");    
+            
+        }
+        
+      
 
         return $criteria;
 
