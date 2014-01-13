@@ -196,9 +196,9 @@ class FinvInvoice extends BaseFinvInvoice {
             
         }
         
-         if(!empty($this->finv_due_date_range)){
-            $criteria->AddCondition("t.finv_due_date >= '".substr($this->finv_due_date_range,0,10)."'");
-            $criteria->AddCondition("t.finv_due_date <= '".substr($this->finv_due_date_range,-10)."'");    
+         if(!empty($this->finv_due_range)){
+            $criteria->AddCondition("t.finv_due_date >= '".substr($this->finv_due_range,0,10)."'");
+            $criteria->AddCondition("t.finv_due_date <= '".substr($this->finv_due_range,-10)."'");    
             
         }
         
