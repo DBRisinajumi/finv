@@ -30,7 +30,7 @@ return array (
   'Date' => 'Дата',
   'Debet account' => '',
   'Description' => 'Описание',
-  'Due Date' => '',
+  'Due Date' => 'Срок оплаты',
   'Fiit Invoice Item' => '',
   'Fiit Invoice Items' => '',
   'FiitId' => '',

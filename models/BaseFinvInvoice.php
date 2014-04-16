@@ -208,6 +208,11 @@ abstract class BaseFinvInvoice extends CActiveRecord
         $criteria->compare('t.finv_ref', $this->finv_ref);
         $criteria->compare('t.finv_ref_id', $this->finv_ref_id);
         
+        if(Yii::app()->sysCompany->getActiveCompany()){
+            $criteria->compare('finv_issuer_ccmp_id', Yii::app()->sysCompany->getActiveCompany());
+        } 
+        
+        
         return $criteria;
         
     }
