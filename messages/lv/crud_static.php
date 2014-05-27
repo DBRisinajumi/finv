@@ -32,7 +32,7 @@ return array (
   'Relations' => 'Relācijas',
   'Save' => 'Saglabāt',
   'Search' => 'Meklēt',
-  'Switch to view mode to edit related records.' => 'Pārslēdzities uz skatīšanās režīms, lai varētu rediģet saistītos ierakstus',
+  'Switch to view mode to edit related records.' => 'Pārslēdzieties uz skatīšanās režīmu, lai varētu rediģēt saistītos ierakstus',
   'The requested page does not exist.' => 'Pieprasītā lapa neeksistē',
   'Update' => 'Labot',
   'View' => 'Skatīt',
