@@ -30,6 +30,14 @@ class FinvInvoice extends BaseFinvInvoice {
         return $this->finv_series_number . '-'.$this->finv_number;
     }
 
+    public function getFcrnCode(){
+        if(empty($this->finv_fcrn_id)){
+            return null;
+        }
+        return Yii::app()->currency->convId2Code($this->finv_fcrn_id);
+        
+    }    
+    
     public function behaviors() {
         return array_merge(
                 parent::behaviors(), array(
